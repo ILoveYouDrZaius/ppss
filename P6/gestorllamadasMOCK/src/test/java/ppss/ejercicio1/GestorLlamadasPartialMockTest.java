@@ -21,18 +21,19 @@ import org.junit.Assert;
  */
 public class GestorLlamadasPartialMockTest {
     private Calendario calendariomock;
-    private TestableGestorLlamadas gestorllamadas = new TestableGestorLlamadas();
+    private GestorLlamadas gestorllamadasmock;
     
     @Test
     public void testC1() {
         int minutos = 10;
         double resultadoEsperado = 208.00f;
-        calendariomock = EasyMock.createMockBuilder(Calendario.class).addMockedMethod("getHoraActual").createMock();
+        calendariomock = EasyMock.createMock(Calendario.class);
         EasyMock.expect(calendariomock.getHoraActual()).andReturn(15);
-        EasyMock.replay(calendariomock);
+        gestorllamadasmock = EasyMock.createMockBuilder(GestorLlamadas.class).addMockedMethod("getCalendario").createMock();
+        EasyMock.expect(gestorllamadasmock.getCalendario()).andReturn(calendariomock);
+        EasyMock.replay(calendariomock, gestorllamadasmock);
         
-        gestorllamadas.setCalendario(calendariomock);
-        double resultadoReal = gestorllamadas.calculaConsumo(minutos);
+        double resultadoReal = gestorllamadasmock.calculaConsumo(minutos);
         Assert.assertEquals(resultadoReal, resultadoEsperado, 0.002f);
     }
 
@@ -40,12 +41,16 @@ public class GestorLlamadasPartialMockTest {
     public void testC2() {
         int minutos = 10;
         double resultadoEsperado = 105.00f;
-        calendariomock = EasyMock.createMockBuilder(Calendario.class).addMockedMethod("getHoraActual").createMock();
+        calendariomock = EasyMock.createMock(Calendario.class);
         EasyMock.expect(calendariomock.getHoraActual()).andReturn(22);
-        EasyMock.replay(calendariomock);
         
-        gestorllamadas.setCalendario(calendariomock);
-        double resultadoReal = gestorllamadas.calculaConsumo(minutos);
+        gestorllamadasmock = EasyMock.createMockBuilder(GestorLlamadas.class).addMockedMethod("getCalendario").createMock();
+        EasyMock.expect(gestorllamadasmock.getCalendario()).andReturn(calendariomock);
+        
+        EasyMock.replay(calendariomock, gestorllamadasmock);
+
+        
+        double resultadoReal = gestorllamadasmock.calculaConsumo(minutos);
         Assert.assertEquals(resultadoReal, resultadoEsperado, 0.002f);
     }
 }
