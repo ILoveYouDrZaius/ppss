@@ -24,7 +24,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class AlumnoConParametrosTest {
     
-    @Parameterized.Parameters(name = "Caso C{index}: dni_valido({0}) = {2}")
+    @Parameterized.Parameters
     public static Collection<Object[]> data(){
         return Arrays.asList(new Object[][]{
             {"123", false},

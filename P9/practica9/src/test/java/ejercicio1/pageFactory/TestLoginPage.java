@@ -17,6 +17,7 @@ public class TestLoginPage {
     public void setup(){
         driver = new FirefoxDriver();
         poLogin = PageFactory.initElements(driver, LoginPage.class);
+        
     }
     
     @Test
@@ -25,8 +26,8 @@ public class TestLoginPage {
         Assert.assertTrue(loginPageTitle.toLowerCase().contains("guru99 bank"));
         poLogin.login("mngr34733", "AbEvydU");
         poManagerPage = PageFactory.initElements(driver, ManagerPage.class);
-        Assert.assertTrue(poManagerPage.getHomePageDashboardUserName().toLowerCase().contains("manger id : mngr34733"));
         driver.close();
+        Assert.assertTrue(poManagerPage.getHomePageDashboardUserName().toLowerCase().contains("manger id : mngr34733"));
     }
     
     @Test
@@ -37,10 +38,11 @@ public class TestLoginPage {
         
         Alert alert = driver.switchTo().alert();
         String mensaje = alert.getText();
+        driver.close();
+
         Assert.assertEquals(mensaje, "User or Password is not valid");
 
         alert.accept();
-        driver.close();
     }
 
 }

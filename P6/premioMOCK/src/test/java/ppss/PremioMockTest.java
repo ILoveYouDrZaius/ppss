@@ -43,6 +43,8 @@ public class PremioMockTest {
         
         resultadoReal = premiomock.compruebaPremio();
         Assert.assertEquals(resultadoReal, resultadoEsperado);
+        
+        EasyMock.verify(premiomock, clientemock);
     }
     
     @Test
@@ -60,5 +62,7 @@ public class PremioMockTest {
         
         resultadoReal = premiomock.compruebaPremio();
         Assert.assertEquals(resultadoReal, resultadoEsperado);
+
+        EasyMock.verify(premiomock, clientemock);
     }
 }
